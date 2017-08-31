@@ -1,31 +1,31 @@
-var http = require("http");
-var fs = require("fs");
+// Dependencies
+// =============================================================
+var express = require("express");
+var bodyParser = require("body-parser");
+var path = require("path");
+var friendsMatch = [];
+
+
+// Sets up the Express App
+// =============================================================
+var app = express();
+var PORT = process.env.PORT || 8080;
+
+// Sets up the Express app to handle data parsing
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 
 
-function Server(port, classification) {
-  this.server = http.createServer(classification);
-  this.server.listen(port, function() {
 
-    // The below statement is triggered (server-side) when a user visits the PORT URL
-    console.log("Server listening on: http://localhost:%s", port);
-
-  });
+// Starts the server to begin listening
+// =============================================================
+app.listen(PORT, function() {
+  console.log("App listening on PORT " + PORT);
+});
 
 
-}
 
-function friendFinder(request, response) {
-
-  fs.readFile(__dirname + "\app\public\home.html", function(err, data) {
-
-    // We then respond to the client with the HTML page by specifically telling the browser that we are delivering
-    // an html file.
-    res.writeHead(200, { "Content-Type": "text/html" });
-    res.end(data);
-  });
-
-}
-
-
-var ffServer = new Server("8080", friendFinder);
+require('./app/routing')(app);
