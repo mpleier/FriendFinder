@@ -181,7 +181,7 @@
 
                             $("#friendPic").html("<img src='" + data[mat].photo + "'height='142' width='142'>");
                             $("#friendName").text(data[mat].name);
-                            $("#friendScore").text(100 - b);
+                            $("#friendScore").text(100 - parseInt(b));
                             $("#myNewFriend").modal({ close : function(){
                   location.reload();
               }});
